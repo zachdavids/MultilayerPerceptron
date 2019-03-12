@@ -67,13 +67,3 @@ with tf.Session() as session :
             session.run(train_optimizer, feed_dict = {X: batch_data, Y: batch_labels, keep_prob: 0.6})
         accuracy.eval({X: mnist.test.images, Y: mnist.test.labels}))
 session.close()
-    
-
-    
-
-        
-        
-        
-
-
-
