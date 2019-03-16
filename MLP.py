@@ -37,7 +37,7 @@ b2 = tf.Variable(tf.random_normal([n_hidden2], stddev = 0.01))
 b3 = tf.Variable(tf.random_normal([n_output], stddev = 0.01))
     
 #Model
-hidden1_layer = tf.nn.relu(tf.add(tf.matmul(X, W1) + b1))
+hidden1_layer = tf.nn.relu(tf.matmul(X, W1) + b1)
 hidden1_dropout = tf.nn.dropout(hidden1_layer, keep_prob)
 hidden2_layer = tf.nn.relu(tf.matmul(hidden1_layer, W2) + b2)
 hidden2_dropout = tf.nn.dropout(hidden2_layer, keep_prob)
@@ -59,11 +59,10 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 with tf.Session() as session :
     tf.global_variables_initializer().run()
-    for epoch in range(epochs):
+    for epoch in range(training_epochs):
         n_batches = int(mnist.train.images.shape[0] / batch_size)
         for batch in range(n_batches):
             batch_data = mnist.train.images[batch_size * batch: batch_size * (batch + 1)]
             batch_labels = mnist.train.labels[batch_size * batch: batch_size * (batch + 1)]
             session.run(train_optimizer, feed_dict = {X: batch_data, Y: batch_labels, keep_prob: 0.6})
-        accuracy.eval({X: mnist.test.images, Y: mnist.test.labels}))
 session.close()
