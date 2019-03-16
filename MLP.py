@@ -9,7 +9,7 @@ import random
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
-mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
+mnist = input_data.read_data_sets("/tmp/data/", one_hot = True)
 
 n_input = 784
 n_hidden1 = 512
@@ -65,4 +65,12 @@ with tf.Session() as session :
             batch_data = mnist.train.images[batch_size * batch: batch_size * (batch + 1)]
             batch_labels = mnist.train.labels[batch_size * batch: batch_size * (batch + 1)]
             session.run(train_optimizer, feed_dict = {X: batch_data, Y: batch_labels, keep_prob: 0.6})
+        
+        tr_accuracy = session.run(accuracy, feed_dict = {X: mnist.train.images, 
+                                                        Y: mnist.train.labels, keep_prob: 1.0})
+        tr_loss = session.run(loss, feed_dict = {X: mnist.train.images, 
+                                                        Y: mnist.train.labels, keep_prob: 1.0})
+        test_accuracy = accuracy.eval({X: mnist.test.images, Y: mnist.test.labels, keep_prob: 1.0})
+        print("Epoch: {0} Training Accuracy: {1:.2f} Test Accuracy: {3:.3f} Training Loss: {2:.3f} "
+            .format(epoch, tr_accuracy, test_accuracy, tr_loss))
 session.close()
